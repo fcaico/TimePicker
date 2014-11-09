@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimePickerSample", "TimePickerSample.csproj", "{3F45EF85-B224-42DB-BD1B-989B5490E186}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fcaico.iOS.TimePicker", "..\TimePicker\Fcaico.iOS.TimePicker.csproj", "{F3608B18-6A68-49E2-9731-515B87C7671A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Debug|iPhone.Build.0 = Debug|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Release|iPhone.ActiveCfg = Release|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Release|iPhone.Build.0 = Release|iPhone
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{3F45EF85-B224-42DB-BD1B-989B5490E186}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Release|iPhone.Build.0 = Release|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{F3608B18-6A68-49E2-9731-515B87C7671A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = TimePickerSample.csproj
+	EndGlobalSection
+EndGlobal
