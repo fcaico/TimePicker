@@ -5,12 +5,12 @@ using MonoTouch.UIKit;
 
 namespace Fcaico.iOS.Controls.TimePicker
 {
-	public static class TimePickerStyleKit
+	internal static class TimePickerStyleKit
 	{
 		public static UIColor TimeColor = UIColor.Black;
 		public static UIColor LabelColor = UIColor.DarkGray;
-		public static UIColor RuleColor = UIColor.DarkGray;
-		public static UIColor ArrowColor = UIColor.DarkGray;
+		public static UIColor RuleColor = UIColor.Orange;
+		public static UIColor ArrowColor = UIColor.Orange;
 
 		public static  UIFont LabelFont = UIFont.SystemFontOfSize(22);
 		public static  UIFont TimeFont = UIFont.SystemFontOfSize(60);

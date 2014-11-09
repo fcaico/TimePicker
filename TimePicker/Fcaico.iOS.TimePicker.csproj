@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Fcaico.iOS.Controls.TimePicker</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>TimePicker</AssemblyName>
+    <AssemblyName>Fcaico.Controls.TimePicker</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +38,6 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeChangedEventArgs.cs" />
     <Compile Include="TimePickerView.cs" />

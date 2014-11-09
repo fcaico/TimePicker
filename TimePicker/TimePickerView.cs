@@ -1,7 +1,6 @@
 ﻿using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using System.CodeDom.Compiler;
 using System.Drawing;
 using System.ComponentModel;
 
@@ -84,6 +83,7 @@ namespace Fcaico.iOS.Controls.TimePicker
 			set
 			{
 				_label.Text = value;
+				SetNeedsDisplay();
 			}
 		}
 
@@ -96,11 +96,9 @@ namespace Fcaico.iOS.Controls.TimePicker
 			set
 			{
 				_separatorLabel.Text = value;
+				SetNeedsDisplay();
 			}
 		}
-
-
-
 
 
 		#region Look and Feel customizations
@@ -134,11 +132,6 @@ namespace Fcaico.iOS.Controls.TimePicker
 				if (_backImage != value)
 				{
 					_backImage = value;
-
-					_hourPrevButton.SetImage(_backImage, UIControlState.Normal);
-					_minutesPrevButton.SetImage(_backImage, UIControlState.Normal);
-					_amPmPrevButton.SetImage(_backImage, UIControlState.Normal);
-
 					SetNeedsDisplay();
 				}
 			}
@@ -156,11 +149,6 @@ namespace Fcaico.iOS.Controls.TimePicker
 				if (_forwardImage != value)
 				{
 					_forwardImage = value;
-
-					_hourNextButton.SetImage(_forwardImage, UIControlState.Normal);
-					_minutesNextButton.SetImage(_forwardImage, UIControlState.Normal);
-					_amPmNextButton.SetImage(_forwardImage, UIControlState.Normal);
-
 					SetNeedsDisplay();
 				}
 			}
@@ -291,8 +279,6 @@ namespace Fcaico.iOS.Controls.TimePicker
 			}
 		}
 
-
-
 		#endregion
 
 		public ISite Site
@@ -387,30 +373,8 @@ namespace Fcaico.iOS.Controls.TimePicker
 			_amPmLabel.TextAlignment = UITextAlignment.Center;
 			_amPmLabel.AdjustsFontSizeToFitWidth = true;
 
-			_hourNextButton.SetImage(
-				TimePickerStyleKit.ImageOfUpArrow(new RectangleF(0, 0, 30, 30), TimePickerStyleKit.ArrowColor), 
-				UIControlState.Normal);
-
-			_hourPrevButton.SetImage(
-				TimePickerStyleKit.ImageOfDownArrow(new RectangleF(0, 0, 30, 30), TimePickerStyleKit.ArrowColor), 
-				UIControlState.Normal);
-
-			_minutesNextButton.SetImage(
-				TimePickerStyleKit.ImageOfUpArrow(new RectangleF(0, 0, 30, 30), TimePickerStyleKit.ArrowColor), 
-				UIControlState.Normal);
-
-			_minutesPrevButton.SetImage(
-				TimePickerStyleKit.ImageOfDownArrow(new RectangleF(0, 0, 30, 30), TimePickerStyleKit.ArrowColor), 
-				UIControlState.Normal);
-
-			_amPmNextButton.SetImage(
-				TimePickerStyleKit.ImageOfUpArrow(new RectangleF(0, 0, 30, 30), TimePickerStyleKit.ArrowColor), 
-				UIControlState.Normal);
-
-			_amPmPrevButton.SetImage(
-				TimePickerStyleKit.ImageOfDownArrow(new RectangleF(0, 0, 30, 30), TimePickerStyleKit.ArrowColor), 
-				UIControlState.Normal);
-
+			_backImage = TimePickerStyleKit.ImageOfDownArrow (new RectangleF (0, 0, 30, 30), TimePickerStyleKit.ArrowColor);
+			_forwardImage = TimePickerStyleKit.ImageOfUpArrow (new RectangleF (0, 0, 30, 30), TimePickerStyleKit.ArrowColor);
 		}
 
 		private void SetupConstraints()
@@ -533,6 +497,15 @@ namespace Fcaico.iOS.Controls.TimePicker
 
 			_topRule.BackgroundColor = RuleColor;
 			_bottomRule.BackgroundColor = RuleColor;
+
+			_hourPrevButton.SetImage (_backImage, UIControlState.Normal);
+			_hourNextButton.SetImage (_forwardImage, UIControlState.Normal);
+
+			_minutesPrevButton.SetImage (_backImage, UIControlState.Normal);
+			_minutesNextButton.SetImage (_forwardImage, UIControlState.Normal);
+
+			_amPmPrevButton.SetImage (_backImage, UIControlState.Normal);
+			_amPmNextButton.SetImage (_forwardImage, UIControlState.Normal);
 
 			base.Draw(rect);
 		}
