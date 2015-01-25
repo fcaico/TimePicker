@@ -23,7 +23,9 @@ namespace Fcaico.iOS.Controls.TimePicker
 
 		#region Data Members
 
-		private DateTime _time = DateTime.MinValue;
+		private DateTime _time = new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.AddHours (1).Hour, 0, 0);
+		private DateTime _minTime = DateTime.Now;
+		private DateTime _maxTime = new DateTime (DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 45, 0);
 		private bool _twentyFourHourTime = false;
 
 		private UILabel _label = new UILabel();
@@ -69,6 +71,32 @@ namespace Fcaico.iOS.Controls.TimePicker
 			set
 			{
 				_time = value;
+				SetNeedsDisplay();
+			}
+		}
+
+		public DateTime MinTime
+		{
+			get
+			{
+				return _minTime;
+			}
+			set
+			{
+				_minTime = value;
+				SetNeedsDisplay();
+			}
+		}
+
+		public DateTime MaxTime
+		{
+			get
+			{
+				return _maxTime;
+			}
+			set
+			{
+				_maxTime = value;
 				SetNeedsDisplay();
 			}
 		}
@@ -506,6 +534,15 @@ namespace Fcaico.iOS.Controls.TimePicker
 
 			_amPmPrevButton.SetImage (_backImage, UIControlState.Normal);
 			_amPmNextButton.SetImage (_forwardImage, UIControlState.Normal);
+
+			_hourPrevButton.Hidden = (Time.Subtract (OneHour) < MinTime);
+			_hourNextButton.Hidden = (Time.Add (OneHour) > MaxTime);
+
+			_minutesPrevButton.Hidden = (Time.Subtract (FifteenMinutes) < MinTime);
+			_minutesNextButton.Hidden = (Time.Add (FifteenMinutes) > MaxTime);
+
+			_amPmPrevButton.Hidden = (Time.Subtract (TwelveHours) < MinTime);
+			_amPmNextButton.Hidden = (Time.Add (TwelveHours) > MaxTime);
 
 			base.Draw(rect);
 		}
