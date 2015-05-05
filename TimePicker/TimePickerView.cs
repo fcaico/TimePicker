@@ -1,7 +1,7 @@
 ﻿using System;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-using System.Drawing;
+using Foundation;
+using UIKit;
+using CoreGraphics;
 using System.ComponentModel;
 
 namespace Fcaico.iOS.Controls.TimePicker
@@ -55,6 +55,9 @@ namespace Fcaico.iOS.Controls.TimePicker
 		private UIFont _labelFont = TimePickerStyleKit.LabelFont;
 		private UIFont _timeFont = TimePickerStyleKit.TimeFont;
 		private UIFont _amPmFont = TimePickerStyleKit.AmPmFont;
+
+        private float _timeFontOffset = 0;
+        private NSLayoutConstraint _timeOffsetConstraint;
 
 		#endregion 
 
@@ -307,6 +310,23 @@ namespace Fcaico.iOS.Controls.TimePicker
 			}
 		}
 
+        [Export("TimeFontOffset"), Browsable(true)]
+        public float TimeFontOffset 
+        {
+            get
+            {
+                return _timeFontOffset;
+            }
+            set
+            {
+                _timeFontOffset = value;
+                RecalculateTimeConstraints();
+            }
+        }
+
+
+
+
 		#endregion
 
 		public ISite Site
@@ -401,11 +421,26 @@ namespace Fcaico.iOS.Controls.TimePicker
 			_amPmLabel.TextAlignment = UITextAlignment.Center;
 			_amPmLabel.AdjustsFontSizeToFitWidth = true;
 
-			_backImage = TimePickerStyleKit.ImageOfDownArrow (new RectangleF (0, 0, 30, 30), TimePickerStyleKit.ArrowColor);
-			_forwardImage = TimePickerStyleKit.ImageOfUpArrow (new RectangleF (0, 0, 30, 30), TimePickerStyleKit.ArrowColor);
+			_backImage = TimePickerStyleKit.ImageOfDownArrow (new CGRect (0, 0, 30, 30), TimePickerStyleKit.ArrowColor);
+			_forwardImage = TimePickerStyleKit.ImageOfUpArrow (new CGRect (0, 0, 30, 30), TimePickerStyleKit.ArrowColor);
 		}
 
-		private void SetupConstraints()
+
+        private NSLayoutConstraint CreateTimeOffsetConstraint(float offset)
+        {
+            return NSLayoutConstraint.Create(_timeContainer, NSLayoutAttribute.Top, NSLayoutRelation.Equal, _topRule, NSLayoutAttribute.Bottom, 1, 5f + offset);
+
+        }
+
+        internal void RecalculateTimeConstraints()
+        {
+            RemoveConstraint(_timeOffsetConstraint); 
+            _timeOffsetConstraint = CreateTimeOffsetConstraint(_timeFontOffset);
+            AddConstraint(_timeOffsetConstraint);
+            SetNeedsLayout();
+        }
+
+        private void SetupConstraints()
 		{
 			_label.TranslatesAutoresizingMaskIntoConstraints = false;
 			_topRule.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -432,7 +467,7 @@ namespace Fcaico.iOS.Controls.TimePicker
 			AddConstraint (NSLayoutConstraint.Create (_amPmPrevButton, NSLayoutAttribute.Top, NSLayoutRelation.Equal, _hourPrevButton, NSLayoutAttribute.Top, 1, 0));
 			AddConstraint (NSLayoutConstraint.Create (_amPmPrevButton, NSLayoutAttribute.CenterX, NSLayoutRelation.Equal, _amPmNextButton, NSLayoutAttribute.CenterX, 1, 0));
 
-			AddConstraint (NSLayoutConstraint.Create (_label, NSLayoutAttribute.Top, NSLayoutRelation.Equal, this, NSLayoutAttribute.Top, 1, 0));
+            AddConstraint(NSLayoutConstraint.Create(_label, NSLayoutAttribute.Top, NSLayoutRelation.Equal, this, NSLayoutAttribute.Top, 1, 0));
 			AddConstraint (NSLayoutConstraint.Create (_label, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _topRule, NSLayoutAttribute.Left, 1, 0));
 
 			AddConstraint (NSLayoutConstraint.Create (_hourNextButton, NSLayoutAttribute.Top, NSLayoutRelation.Equal, this, NSLayoutAttribute.Top, 1, 0));
@@ -449,7 +484,9 @@ namespace Fcaico.iOS.Controls.TimePicker
 			AddConstraint (NSLayoutConstraint.Create (_topRule, NSLayoutAttribute.Width, NSLayoutRelation.Equal, this, NSLayoutAttribute.Width, 1, 0));
 			AddConstraint (NSLayoutConstraint.Create (_topRule, NSLayoutAttribute.Height, NSLayoutRelation.Equal, null, NSLayoutAttribute.NoAttribute, 1, 1f));
 
-			AddConstraint (NSLayoutConstraint.Create (_timeContainer, NSLayoutAttribute.Top, NSLayoutRelation.Equal, _topRule, NSLayoutAttribute.Bottom, 1, 5f));
+            _timeOffsetConstraint = CreateTimeOffsetConstraint(_timeFontOffset);
+            AddConstraint(_timeOffsetConstraint);
+			//AddConstraint (NSLayoutConstraint.Create (_timeContainer, NSLayoutAttribute.Top, NSLayoutRelation.Equal, _topRule, NSLayoutAttribute.Bottom, 1, 5f));
 			AddConstraint (NSLayoutConstraint.Create (_timeContainer, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _label, NSLayoutAttribute.Right, 1, 10f));
 			AddConstraint (NSLayoutConstraint.Create (_timeContainer, NSLayoutAttribute.Right, NSLayoutRelation.Equal, _topRule, NSLayoutAttribute.Right, 1, 0));
 			AddConstraint (NSLayoutConstraint.Create (_timeContainer, NSLayoutAttribute.Height, NSLayoutRelation.Equal, _hoursLabel, NSLayoutAttribute.Height, 1, 0));
@@ -460,8 +497,8 @@ namespace Fcaico.iOS.Controls.TimePicker
 			AddConstraint (NSLayoutConstraint.Create (_bottomRule, NSLayoutAttribute.Right, NSLayoutRelation.Equal, _topRule, NSLayoutAttribute.Right, 1, 0));
 			AddConstraint (NSLayoutConstraint.Create (_bottomRule, NSLayoutAttribute.Height, NSLayoutRelation.Equal, _topRule, NSLayoutAttribute.Height, 1, 0));
 
-			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_hoursLabel, NSLayoutAttribute.Top, NSLayoutRelation.Equal, _timeContainer, NSLayoutAttribute.Top, 1, 0));
-			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_hoursLabel, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _timeContainer, NSLayoutAttribute.Left, 1, 0));
+            _timeContainer.AddConstraint (NSLayoutConstraint.Create(_hoursLabel, NSLayoutAttribute.Top, NSLayoutRelation.Equal, _timeContainer, NSLayoutAttribute.Top, 1, 0));
+            _timeContainer.AddConstraint (NSLayoutConstraint.Create (_hoursLabel, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _timeContainer, NSLayoutAttribute.Left, 1, 0));
 			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_hoursLabel, NSLayoutAttribute.Width, NSLayoutRelation.Equal, _timeContainer, NSLayoutAttribute.Width, 0.3f, 0));
 			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_separatorLabel, NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, _hoursLabel, NSLayoutAttribute.CenterY, 1, 0));
 			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_separatorLabel, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _hoursLabel, NSLayoutAttribute.Right, 1, 0));
@@ -469,8 +506,9 @@ namespace Fcaico.iOS.Controls.TimePicker
 			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_minutesLabel, NSLayoutAttribute.Top, NSLayoutRelation.Equal, _hoursLabel, NSLayoutAttribute.Top, 1, 0));
 			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_minutesLabel, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _separatorLabel, NSLayoutAttribute.Right, 1, 0));
 			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_minutesLabel, NSLayoutAttribute.Width, NSLayoutRelation.Equal, _timeContainer, NSLayoutAttribute.Width, 0.3f, 0));
-			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_amPmLabel, NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, _hoursLabel, NSLayoutAttribute.CenterY, 1, 0));
-			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_amPmLabel, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _minutesLabel, NSLayoutAttribute.Right, 1, 5f));
+
+            _timeContainer.AddConstraint (NSLayoutConstraint.Create(_amPmLabel, NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, _hoursLabel, NSLayoutAttribute.CenterY, 1, 0));
+            _timeContainer.AddConstraint (NSLayoutConstraint.Create (_amPmLabel, NSLayoutAttribute.Left, NSLayoutRelation.Equal, _minutesLabel, NSLayoutAttribute.Right, 1, 5f));
 			_timeContainer.AddConstraint (NSLayoutConstraint.Create (_amPmLabel, NSLayoutAttribute.Width, NSLayoutRelation.Equal, _timeContainer, NSLayoutAttribute.Width, 0.15f, 0));
 
 		}
@@ -479,7 +517,7 @@ namespace Fcaico.iOS.Controls.TimePicker
 
 		#region Methods
 
-		public override void Draw (RectangleF rect)
+		public override void Draw (CGRect rect)
 		{
 			int hour = Time.Hour;
 			int minute = Time.Minute;
